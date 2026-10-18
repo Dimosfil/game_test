@@ -1,0 +1,55 @@
+# Unity generated caches, local settings, and build output
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Ll]ogs/
+/[Uu]ser[Ss]ettings/
+/[Bb]uild/
+/[Bb]uilds/
+/[Mm]emoryCaptures/
+/[Rr]ecordings/
+/ExportedObj/
+/.gradle/
+
+# Generated IDE projects and machine-specific state
+/.vs/
+/.idea/
+/*.csproj
+/*.sln
+/*.slnx
+/*.unityproj
+/*.pidb
+/*.booproj
+*.user
+*.suo
+*.userprefs
+*.opendb
+*.VC.db
+
+# Unity crash reports and generated diagnostics
+/sysinfo.txt
+/crashlytics-build.properties
+
+# Local environment values; keep redacted examples reviewable
+/.env
+/.env.*
+!/.env.example
+!/.env.template
+
+# Local/generated AI-agent memory and runtime noise
+tools/project-memory/*.sqlite
+tools/project-memory/*.sqlite-*
+tools/project-memory/*.db
+tools/project-memory/*.db-*
+tools/project-memory/vector-index/
+tools/project-memory/chroma/
+tools/project-memory/embedding-cache/
+tools/project-memory/semantic-corpus*.jsonl
+__pycache__/
+tools/project-memory/devops.local.json
+.repowise/
+tools/summary/*.tmp
+tools/deploy/ftp.local.json
+tools/deploy/prod.local.json
+tools/deploy/deploy-gateway.local.json
+*.log

@@ -137,12 +137,9 @@ elseif (-not (Test-Path -LiteralPath $metadataPath -PathType Leaf)) {
     "Instruction update check: metadata missing at tools/project-memory/instruction-kit.json"
 }
 else {
-    $metadata = Get-Content -LiteralPath $metadataPath -Raw | ConvertFrom-Json
-    $updateEnabled = -not ($metadata.update_check -and ($metadata.update_check.PSObject.Properties.Name -contains "enabled") -and $metadata.update_check.enabled -eq $false)
-    if (-not $updateEnabled) {
-        "Instruction update check: disabled by metadata"
-    }
-    else {
+    # The checker owns policy defaults, validation, evidence, and next action.
+    # Do not duplicate its decision here or discard the application directive.
+    & {
         $checkerPath = $checkerCandidates | Where-Object { Test-Path -LiteralPath $_ -PathType Leaf } | Select-Object -First 1
         if (-not $checkerPath) { throw "Instruction update checker is missing." }
         Push-Location $projectRoot

@@ -1,5 +1,211 @@
 # Итерация 06 — движение, бой, настоящий AI и редкие FPS dips
 
+## C28 long candidate-only — scoped margin retained; strict FPS FAILED
+
+C28 status decision: retain the bounded managed HUD index-prefix cleanup as a
+local CPU-margin optimization: repeated4/4 matched WorldLabels median/p95 lead,
+272 tests and full-quality ordinary30 verification. This is NOT strict FPS
+acceptance or proof of a20ms cause; long30 retains12slow/2 >20ms/max24.7390ms.
+C29 is prepared only, fresh capture consent pending; no C29 recording has run.
+The prepared profile selector requires fresh process lifetime/image/mainTID,
+profile-matched native anchor calibration and actual scheduler QPC coverage;
+no old C23/C26 epoch, PID or native cause is transferable.
+
+Все3 fresh launches завершены: **30 eligible боёв/52007frames**,12 >16.667ms,
+2 >20ms,2 >21ms,0 >25ms,max24.7390ms. Whole p95/p99/real20Hz и full800/
+near720 gates30/30; trial p99 range8.8087–14.4300ms не является every-frame
+гарантией. Run1:17344frames/9slow/max24.7390ms; Run2:17312/3/max23.1313ms;
+Run3:17351/0/max16.1276ms. **Устранение всех20–21ms кадров не достигнуто.**
+
+Focus/clamps/source events0, observer complete, source214 exact/combined788binary
+identity pass; full1600×900/4MSAA/Ultra/shadow100/D3D11 и исходный gameplay hash
+сохранены. Ordinary GUI native-query attempts0, MainLoop/native-wait/GameStall
+probes off; отсутствие их измерений не означает отсутствие waits. Editor CPU
+около1.2cores — только background context. Counter totals7096 native vertex
+uploads/44911 exact reuse. Это все candidate-only прогоны, не long paired control;
+локальный elapsed margin lead4/4 относится к отдельному ABBA выше/ниже.
+
+Source-dedup52007 GUI frames/104014calls/52007Repaints: WorldLabels median/p95
+single .2243/.3890ms,all .5480/.8458ms. Logical geometry median single732indices/
+61bars,all4164/347,max5280/440; nested UploadGeometry и immediate Draw сохранены
+отдельно. WorldLabels включает Begin/Add/projection и вложенные upload/draw,
+не является exclusive CPU временем index preparation.
+
+Worst Run1 all trial2 frame12996/tick43=24.7390ms: previous source12995
+View.9238ms,GUI7.1143ms,WorldLabels2.1963ms,UploadGeometry.7030ms,
+Prepare6.0394ms,Draw1.7572ms; GCCollect serialized0ms (availability не включена в этот compact helper). Second Run2 all trial3
+frame16137/tick226=23.1313ms: previous source16136 GUI2.5133ms,
+WorldLabels.7890ms,Prepare3.7564ms,Draw1.2485ms,GCCollect0ms. Эти overlapping
+previous-completed scopes не локализуют оставшийся wall gap и не доказывают
+causal regression/fix. Все12tails и ±2frame neighborhoods сохранены.
+[C28 long summary/provenance](../../Builds/Evidence/Iteration06/HealthIndexCycle28Long30/Cycle28LongSeriesAnalysis/cycle28-long-summary.json).
+
+## C26 — diagnostic chain verified, JIT source owner не установлен
+
+Fresh271/271 tests36.49s,compile0errors/0warnings; actual Editor Mono positive
+fixture matched method identity/code range. Guarded dual builds success,
+post-build214source exact,394binary captured. Source manifest7CF63511…C2335,
+binary0D4D123E…E3E1E. Это verification нового diagnostic module/final hook,
+не FPS improvement. [Build evidence](../../Builds/Evidence/Iteration06/Cycle26Verification/build-eval.json),
+[tests](../../Builds/Evidence/Iteration06/Cycle26Verification/EditMode/editmode-results.json).
+
+Controlled20ms GAME oracle passed independent raw DMP/pre-context equality→
+FrozenPost request→Game PID/mainTID/FILETIME/nonce/epoch/PC exact chain.
+All lookup brackets после Resume и последнего NativeClockEnd. Actual own
+LookupFixture method/range21B/offset0 положителен. Anchor736 joined через
+actualPrevious736 к completed737=injection737; anchor816/heartbeat816 относится
+к completed817. Both requested PCs explicit NoJIT; mapped owner не выдумывается.
+Whole2829frames fully focused,1clamp в injected trial; max328.1516ms и dump
+frame817239.8065ms не natural tails. [Oracle chain](../../Builds/Evidence/Iteration06/GameStallOracleCycle26/c26-oracle-summary.json).
+
+Natural A:8/13600frames,1 >16.667/20/21/25ms,max253.0669ms — mapped capture
+anchor755/heartbeat755→actualPrevious755/completed756. Raw DMP/direct equality,
+request/Game identity/QPC/positive fixture pass; captured native PC explicit
+unavailable. **First trial1583/1583focused, остальные7 trials12017unfocused**;
+1clamp относится к capture trial. Other13599frames max15.246ms,0 >16.667ms,
+но это instrumented mostly-unfocused cohort, не clean ordinary acceptance и
+не доказательство observer effect. Все hash/quality прежние. Helper CPU1281.25ms/
+130669.24ms, budget не исчерпан, helper завершился после game exit. Captured
+JIT source owner и strict FPS success не установлены. [Natural A chain](../../Builds/Evidence/Iteration06/GameStallNaturalCycle26A/c26-natural-summary.json).
+
+## C27 — requested BitBlt rejected; strict FPS remains failed
+
+C27 ordinary ABBA завершён на тех же214source/394binary: все8 боёв eligible,
+13073frames,10 >16.667ms,3 >20ms,0 >21/25ms,max20.2544ms. Whole p95/p99/
+20Hz8/8, bands7/8; **strict FPS FAILED**. Default A+D:6784frames/3slow/
+1 >20ms; requested BitBlt B+C:6289/7slow/2 >20ms,max20.1861ms. Candidate
+median хуже во всех4 matched selection contrasts (+.2917…+.8761ms), повторного
+выигрыша нет; C all-selection Full800p99=20.1861ms сохранён как failure.
+Focus/clamps/source events0; probes off, hash/fullquality прежние. Editor CPU
+около1.23 cores — aggregate context, не причина кадра. Actual swap effect
+не измерен: CLI requested-only, threading mode его не доказывает. Кандидат
+отклонён, production default сохранён; расширение30 не выполнялось.
+[C27 ABBA](../../Builds/Evidence/Iteration06/SwapChainCycle27ABBA/Cycle27SeriesAnalysis/cycle27-abba-summary.json).
+
+## C28 — repeated scoped margin; strict FPS still failed
+
+C28 ABBA завершён:272/272 tests40.47s,compile0/0,dualbuild success,
+source214 exact, combined control/candidate binary788. Managed index-prefix
+reuse даёт повторяемый WorldLabels elapsed margin lead4/4 contrasts. Pooled
+selection1 median/p95 .2270/.4014→.2200/.3744ms; all .5912/.9666→.5494/.8584ms.
+Все13956 source frames dedup/aligned/completed,2GUIcalls/1Repaint на frame;
+logical geometry median single732indices/61bars,all4164/347,max5280/440.
+TotalUploadMs — только nested UploadGeometry, не подготовка и не exclusive CPU.
+
+Все8 обычных боёв eligible:13956frames,15 >16.667ms,4 >20ms,2 >21ms,
+1 >25ms,max32.4718ms. Whole p95/p99/20Hz8/8,bands7/8; **strict FPS FAILED**.
+Control6941frames/3slow/max18.3543ms; candidate7015/12slow/max32.4718ms.
+B-all early ticks1–8 содержит10slow и все4 >20ms: Full800p95/p99
+20.7805/32.4718ms,near72019.2610/32.4718ms. Этот cluster сохранён, но один
+bounded launch не доказывает causal regression. Focus/clamps/source events0,
+ordinary probes off, fullquality/hash прежние; Editor CPU~1.2cores только context.
+Повторяемый scoped margin lead допускает дальнейшую проверку, не FPS-fix claim.
+[C28 ABBA/provenance](../../Builds/Evidence/Iteration06/HealthIndexCycle28ABBA/Cycle28SeriesAnalysis/cycle28-abba-summary.json).
+
+## C25 — Read-window capture подтверждён; source owner ещё не установлен
+
+Fresh254/254 tests37.11s,compile0/0,frozen208source/394binary. Protocolv2/80B
+retains last active ReadQPC/frame across Early/EOF. SameReadWindow допускает
+progression stages в том же anchor/epoch; после synchronized context callbacks
+сравниваются full Same с фактическим frozen PostContext. Attempts deduplicated
+по epoch+ReadQPC+ReadFrame. Никаких graphics/gameplay изменений.
+
+Controlled20ms oracle: actual injection717 соответствует anchor716→raw
+MainLoop PreviousSample716/completed717. Native Read-to-trigger17.6114ms при
+latest heartbeat gap11.8508ms. Второй capture anchor872/heartbeat872EOF joined
+через PreviousSample872 к completed873, не872; он не controlled injection и
+не ordinary acceptance. Оба independent raw-DMP/pre-context RIP/RSP/RBP exact
+matches,80B/v2/sameReadWindow/frozen callbacks,prior0/Resume1/no uncertainty
+passed. Whole2987frames fully focused,1clamp в injected trial; все hash/quality
+сохранены. [Independent oracle](../../Builds/Evidence/Iteration06/GameStallOracleCycle25/c25-oracle-summary.json).
+
+Natural A: **8 боёв/13438 кадров**,5 >16.667ms,2 >20ms,2 >21ms,2 >25ms,
+max358.8035ms. Оба >20 — dump/suspension-inflated completed frames2609 и10290.
+Capture1 epoch2 anchor2608/heartbeat2608EOF→actualPrevious2608/completed2609;
+age17.3326ms против latest gap7.5278ms. Capture2 epoch6 anchor10289/heartbeat
+10289Read→actualPrevious10289/completed10290; age16.1792ms. Independent raw
+AMD64 DMP/direct contexts равны, callbacks frozen,Resume1,errors/uncertainty0.
+Capture wall358.8035/296.367ms не описывает natural latency: manual holds
+340.7587/278.666ms. Остальные13436frames descriptive-only:3 >16.667ms,
+max18.9953ms,0 >20; исключение двух dump frames не делает cohort ordinary.
+
+Focus13438/13438,2clamps в capture trials; hash и Release1600×900/4MSAA/Ultra/
+shadow100/D3D11 прежние. Helper CPU1203.125ms/81206.5082ms, active poll mean
+1.5327ms/max9.5785ms,wait failures0. Helper завершил budget2 в epoch6; нельзя
+заявлять полное watcher coverage последних боёв. Native pre-trigger age —
+elapsed-window lower bound, не полная длительность будущего кадра и не время
+известного метода. Source owner остаётся не установлен, strict FPS success
+не заявляется. [Natural capture proof](../../Builds/Evidence/Iteration06/GameStallNaturalCycle25A/c25-natural-summary.json),
+[mechanism](../../Builds/Evidence/Iteration06/Cycle25Verification/mechanism-plan.md).
+
+C26 final hook: после всех trial timing/focus/GC и volley PNG, до quit,
+own-game untimed hook читает max2 atomic verified capture requests≤16KB.
+Loaded Mono official exports дают current-domain JIT table lookup PC→method/
+positive code range/offset с bounded UTF8 name/free. Helper публикует запросы
+только после Resume1 и independent-context-equivalent verification, используя
+FrozenPostContext identity/epoch/Read anchor. Нет remote invoke, full heap,
+other-app data/system trace или graphics changes. Post-run current JIT mapping
+не гарантирует capture-time code lifetime и не является elapsed CPU attribution.
+C24/C25 evidence не переписываются; C26 actual GAME verification приведена выше.
+Фокусированный module passport и canonical map согласованы: reader
+GameStallSymbolRequests отвечает за own-run bounded I/O/validation/report,
+WindowsGameStallSymbols — за Mono metadata lookup без I/O/invocation; final
+Combat hook выполняется после всех counters/PNG/final pause и до teardown.
+Public Mono find фильтрует trampolines; opaque offsets не используются.
+Actual Editor/GAME native positive fixtures подтвердили identity/range, но
+captured native PCs вернули explicit NoJIT: GAME JIT owner не заявляется.
+[Module map](../../tools/project-memory/specs/rts-first-slice.md),
+[module passport](../../tools/project-memory/specs/rts-moving-ai-performance.md).
+
+## C24 — watchdog проверен, composite20ms сохраняется
+
+C24 verification:253/253 tests passed,compile0/0,frozen208source/394binary;
+качество/gameplay не меняются. Own GAME-only external helper проверяет
+PID/path/start FILETIME/mainTID/fresh nonce и seqlock, затем использует ровно
+один owned Suspend→GetThreadContext→stable heartbeat→dump→Resume в finally.
+Предыдущий suspend count0, Resume return1 обязательны; uncertainty требует
+parent cleanup собственного GAME. Normal|ThreadInfo исключает full heap;
+никакого external app data/system trace. [Reviewed contract](../../Builds/Evidence/Iteration06/Cycle24Verification/mechanism-plan.md).
+
+Failed evidence сохранено:80ms Retry1 обнаружил frame711, но callback уже
+видел713; Short20ms обнаружил746/Stage2, после context оказался Stage4 и
+правильно declined без dump. После переноса JSON/flush за synchronized capture
+controlled20ms ShortRetry1 прошёл: actual injection798/epoch1=trigger798/Stage2,
+direct AMD64 CONTROL|INTEGER и independently read DMP RIP/RSP/RBP совпали;
+prior0/Resume1, cleanup uncertainty false. Оба child exit0/no kill,208/394
+pre/post совпали. Whole3487frames fully focused, injected trial имеет1clamp.
+Frame798278.923ms содержит253.0166ms suspension/dump252.7572ms, не natural tail.
+80ms manual Retry2 также прошёл, но не заменяет короткую20ms oracle.
+[Short success](../../Builds/Evidence/Iteration06/GameStallOracleCycle24ShortRetry1/c24-oracle-summary.json),
+[short missed](../../Builds/Evidence/Iteration06/GameStallOracleCycle24Short/c24-oracle-summary.json),
+[80ms manual](../../Builds/Evidence/Iteration06/GameStallOracleCycle24Retry2/c24-oracle-summary.json).
+
+Natural A без инъекции: **8/13982frames**,1 >16.667ms,1 >20ms,0 >21ms,
+0 >25ms,max20.1783ms selection1 trial1 frame918/tick97. Focus полный,
+clamps0,whole p95/p99/20Hz8/8, hashes прежние; Release1600×900/4MSAA/Ultra/
+shadow100/D3D11. Helper0captures/0waitfailures; ownCPU953.125ms за129304.899ms,
+active polling mean1.5899ms/max11.1616ms. Эта серия с observer не является
+ordinary FPS acceptance; отсутствие dump не доказывает отсутствие long frame.
+
+У худшего frame918 aligned raw intervals: previousRead917→EOF91717.0523ms,
+EOF917→Early9183.0599ms, Early918→Read918.0661ms, всего20.1783ms. Все меньше
+watchdog18ms. Native anchors16/16 дают корректный свежий clock mapping;
+boundary QPC5956438387927→5956438558450→5956438589049→5956438589710.
+Heartbeat пишется чуть после Capture/на входе Read; это не точные GUI/Present
+границы. Source917 View.6276/GUI.8527/Prepare1.854/Draw.7083ms,GCCollect0;
+NativeCPU6.583/GPU4.2956ms не являются exclusive partition wall. Причина
+composite tail не установлена. [Natural A proof](../../Builds/Evidence/Iteration06/GameStallNaturalCycle24A/c24-natural-summary.json).
+
+C25 изменил только opt-in diagnostic protocol:80B/v2 retained
+LastReadSampleQpc/frame, active Read updates anchor atomically,Early/EOF retain,
+Begin/End/Disable reset0/−1. Helper Read-to-poll age≥16ms отделён от latest-stage
+age. Anchor frame может быть current frame или current−1; interval не
+приписывается автоматически текущему frame. Trigger16ms — near-budget sampling,
+не доказательство natural>16.667ms. До первого active Read нет anchor coverage;
+ошибочные/changed seqlock snapshots не являются stall proof. C24 raw/failures
+сохранены; C25 фактическая verification приведена выше. Нет speculative production
+fix, quality reduction или новой system trace. [C25 plan](../../Builds/Evidence/Iteration06/Cycle25Verification/mechanism-plan.md).
+
 ## C23 — trace не воспроизвела target; ordinary strict FAILED
 
 На прежних frozen source204/binary394 выполнены отдельные diagnostic capture
@@ -41,10 +247,9 @@ Source watcher unavailable/events null, полные pre/post204/394 совпа�
 [bounded scheduler](../../Builds/Evidence/Iteration06/NativeTraceCycle23/native-analysis/scheduler-verdict.md),
 [bounded GPU](../../Builds/Evidence/Iteration06/NativeTraceCycle23/native-analysis/gpu-review.md).
 
-**Every-frame16.667ms цель не достигнута.** C24 в работе как opt-in собственный
-GAME-only watchdog/minidump: без external app data/system trace/quality changes.
-Это ещё не FPS fix и не passed runtime/test verification. Dump-triggered pauses
-должны быть отделены от natural tails. Новый capture этим шагом не разрешён.
+**Every-frame16.667ms цель не достигнута.** Последующая GAME-only C24 диагностика
+описана выше. Dump-triggered pauses отделены от natural tails; новая system trace
+не выполнялась и этим шагом не разрешена.
 
 ## C22 — bounded cleanup сохранён; strict цель не достигнута
 

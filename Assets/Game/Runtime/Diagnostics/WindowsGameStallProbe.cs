@@ -17,13 +17,17 @@ namespace ColonyRTS.Diagnostics
     [DisallowMultipleComponent]
     internal sealed class WindowsGameStallProbe : MonoBehaviour, IDisposable
     {
-        internal const int MappingBytes=64;
-        internal const uint Magic=0x53535452, ProtocolVersion=1;
+        internal const int MappingBytes=80;
+        internal const uint Magic=0x53535452, ProtocolVersion=2;
         internal const string MappingPrefix="Local\\ColonyRTS.GameStall.";
         IntPtr mapping,view;
-        bool initialized,available,active;
+        bool initialized,available,active,disposed;
         uint sequence,epoch,processId,mainThreadId;
         long processStartFileTime,frequency,lastQpc;
+        // Raw native QPC of the latest active ReadSample, retained across Early/EOF.
+        // This is an ongoing Read-to-poll diagnostic anchor, not a Present boundary.
+        long lastReadSampleQpc;
+        int lastReadSampleFrame=-1;
 
         internal bool Available=>available;
         internal bool SampleActive=>active;
@@ -66,7 +70,7 @@ namespace ColonyRTS.Diagnostics
 
         internal bool Initialize(string mapName)
         {
-            if(initialized)throw new InvalidOperationException("Stall probe initialization is single-use.");
+            if(initialized||disposed)throw new InvalidOperationException("Stall probe initialization is single-use.");
             if(mapName==null||!mapName.StartsWith(MappingPrefix,StringComparison.Ordinal)||
                 !Guid.TryParseExact(mapName.Substring(MappingPrefix.Length),"N",out _))
                 throw new ArgumentException("Explicit local game-stall GUID mapping required.",nameof(mapName));
@@ -99,7 +103,8 @@ namespace ColonyRTS.Diagnostics
                 Marshal.WriteInt64(view,16,processStartFileTime);
                 Marshal.WriteInt64(view,40,frequency);
                 Marshal.WriteInt32(view,60,0);
-                WriteBody(false,GameStallStage.None,lastQpc);
+                Marshal.WriteInt32(view,76,0);
+                WriteBody(false,GameStallStage.None,lastQpc,Time.frameCount);
                 EndWrite();available=true;
                 return true;
             }
@@ -140,7 +145,8 @@ namespace ColonyRTS.Diagnostics
             if(!QueryPerformanceCounter(out var qpc)||qpc<lastQpc)
             {DisableProtocol("Native heartbeat clock failed or regressed.");return;}
             lastQpc=qpc;
-            BeginWrite();WriteBody(active,stage,qpc);EndWrite();
+            int frame=Time.frameCount;
+            BeginWrite();WriteBody(active,stage,qpc,frame);EndWrite();
             HeartbeatCount++;
 #endif
         }
@@ -149,7 +155,7 @@ namespace ColonyRTS.Diagnostics
         {
             active=false;FailureReason=reason;
             if(view!=IntPtr.Zero)
-            {BeginWrite();WriteBody(false,GameStallStage.Disabled,lastQpc);EndWrite();}
+            {BeginWrite();WriteBody(false,GameStallStage.Disabled,lastQpc,Time.frameCount);EndWrite();}
             available=false;
         }
 
@@ -164,19 +170,27 @@ namespace ColonyRTS.Diagnostics
             Thread.MemoryBarrier();sequence=unchecked(sequence+1);
             Marshal.WriteInt32(view,24,unchecked((int)sequence));
         }
-        void WriteBody(bool sampleActive,GameStallStage stage,long qpc)
+        void WriteBody(bool sampleActive,GameStallStage stage,long qpc,int frame)
         {
+            if(!sampleActive||stage==GameStallStage.SampleBegin)
+            {lastReadSampleQpc=0;lastReadSampleFrame=-1;}
+            else if(stage==GameStallStage.ReadSample)
+            {lastReadSampleQpc=qpc;lastReadSampleFrame=frame;}
             Marshal.WriteInt32(view,28,sampleActive?1:0);
-            Marshal.WriteInt32(view,32,Time.frameCount);
+            Marshal.WriteInt32(view,32,frame);
             Marshal.WriteInt32(view,36,(int)stage);
             Marshal.WriteInt64(view,48,qpc);
             Marshal.WriteInt32(view,56,unchecked((int)epoch));
+            Marshal.WriteInt64(view,64,lastReadSampleQpc);
+            Marshal.WriteInt32(view,72,lastReadSampleFrame);
         }
 
         void OnDisable(){Dispose();}
         void OnDestroy(){Dispose();}
         public void Dispose()
         {
+            if(disposed)return;
+            disposed=true;
             if(view!=IntPtr.Zero)DisableProtocol(FailureReason);
             active=false;available=false;
             ReleaseHandles();

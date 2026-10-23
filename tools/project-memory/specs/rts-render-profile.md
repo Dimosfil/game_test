@@ -119,8 +119,9 @@ World health bars preserve their black/fill rectangles in one dynamic mesh draw;
 opt-in host profiling exposes source-frame upload/immediate-draw wall scopes and
 logical geometry/shrink/empty counts plus native capacities/reserve events. These
 durations are parts of GUI wall and do not prove deferred GPU buffer work.
-The provisional C17 candidate retains C16's exact submitted-geometry cache,
-C13's initialized indices and C12's geometrically grown native vertex/index capacity
+The current C28 CPU-margin candidate retains C17's raw-word comparison,
+C16's exact submitted-geometry cache, C13's initialized native indices and
+C12's geometrically grown native vertex/index capacity
 from actual submitted prefixes only. Begin's observed potential-bar count reserves
 managed preparation lists; it cannot force native growth. A new actual high-water
 may grow buffers during timing and must remain visible in evidence. Physical mesh
@@ -146,6 +147,21 @@ rectangle has the same contiguous quad index pattern, so C13 retains initialized
 UInt32 index data: SetIndexBufferData runs only for a new actual index high-water
 or recreated index storage, before vertex data. Growth within spare capacity must
 initialize its new prefix; vertex-only reserve does not invalidate existing indices.
+C28 additionally retains the managed UInt32 index prefix instead of clearing and
+rewriting six indices for each clipped rectangle on every Repaint. AddRectangle
+prepares vertices only. ActiveIndexCount is checked(vertices.Count/4*6), independent
+of retained list.Count; native capacity/upload length, empty checks, exact-reuse
+counts, submesh geometry and LatestIndices diagnostics all use this actual count.
+Managed index generation runs only inside a needed native index upload and extends
+only a new actual prefix. A recreated native index buffer resets initializedIndices
+to zero and uploads the actual prefix from retained managed data; vertex-only
+growth leaves initialized indices valid. Failed native mutations still invalidate
+the exact-geometry certificate and retry; successful native-call counters retain
+their earlier meaning. Begin may reserve managed capacity, never native potential
+geometry. Native sizing/count policy, drawn content, shader, color bits, clipping,
+bounds, camera HDR, MSAA, lighting and draw cadence are unchanged. This removes
+redundant managed writes; it does not attribute presentation waits or prove an FPS
+tail improvement.
 SetSubMesh plus mesh.bounds describe only actual clipped geometry, excluding the
 retained index tail. Logical uploaded counts remain separate from initialized
 index high-water and storage capacity, including shrink diagnostics.
@@ -158,6 +174,15 @@ disposal releases the mesh and material. HudHealthBarBufferTests independently
 checks clipped positions/colors/indices/bounds, actual grow→shrink→empty→grow,
 unused potential-count independence, new-prefix initialization within spare
 capacity, cached index-prefix reuse and owner cleanup.
+The C28 actual-Mesh case additionally checks a cached larger prefix followed by
+one surviving clipped quad, empty/fully clipped passes, regrowth within the prior
+prefix, new prefix within spare native capacity and native growth. Real indices,
+colors, positions, submesh ranges and bounds must match the active geometry; the
+cached tail must never become submitted triangles. C28 passed272/272 EditMode
+tests in40.47s, zero reported compile errors/warnings and guarded dual builds;
+214source inputs and788combined control/candidate binary files were verified.
+Performance status and the still-open strict frame-tail goal are maintained in
+rts-moving-ai-performance.md; fewer managed writes alone are not acceptance.
 The additional raw-word test constructs Color through an explicit integer union
 and reads native CPU vertex storage with Mesh.AcquireReadOnlyMeshData and
 GetVertexData<int>(0). With finite positions it checks all56words of eight vertices,
@@ -174,7 +199,8 @@ Frozen manifests contain189source inputs/8binaries. Compact evidence is under
 ignored Builds/Evidence/Iteration06/Cycle17Verification, with
 source-manifest-cycle17.json and binary-manifest-cycle17.json in Iteration06.
 C17A ran with background contamination and is retained as non-clean evidence;
-its FPS result is not accepted. C17 remains provisional pending isolated series.
+its FPS result is not accepted. At that checkpoint C17 remained provisional
+pending isolated series; this historical result is not C28 acceptance evidence.
 Less comparison work or fewer API calls does not establish an FPS improvement.
 C11's earlier potential-count reserve retained8192/16384 elements but failed its
 FPS series; it is not the active sizing contract. The normal C12A/B series passed

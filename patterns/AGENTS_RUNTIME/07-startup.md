@@ -33,6 +33,21 @@
   Keep the user-facing output to one compact status line or include it in the
   first substantive reply. That compact status must explicitly include the
   pending migration count, including `0` when no migrations are pending.
+- Treat the update checker as policy evidence and a handoff to agent execution,
+  not as the migration executor. When enabled and pending, read the listed
+  accepted migrations, apply and verify their file changes, then record metadata
+  before task-specific work; require no extra command or confirmation. Recheck
+  the installed version and pending count after recording. If a legacy startup
+  helper only prints availability, run the checker or read metadata directly and
+  continue this flow. A helper's unsupported `-Apply`, notice-only behavior, or
+  absence of an executor does not disable automatic application.
+- Claim that automatic application is disabled only when current metadata has
+  JSON boolean `false` at `update_check.auto_apply_pending_migrations` or
+  `update_check.enabled`; cite the exact file path, key, and value. Missing keys
+  mean enabled. Invalid JSON or non-boolean values mean unverified policy and a
+  concrete configuration blocker. Distinguish policy, execution, and blockers:
+  say "updates not applied: <verified reason>" if execution did not complete;
+  never invent a user opt-out or report an unchecked pending count as zero.
 - Before implementation, derive the task goal and observable success criteria
   from the user's request and relevant project context. A clear bounded fix,
   review, or instruction edit is sufficient without a project-goal interview.

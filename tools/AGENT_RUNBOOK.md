@@ -210,6 +210,11 @@ never overwritten or supplemented with invented old hashes.
 
 ## Local instruction integrity and retrieval
 
+The update checker treats missing policy keys, including an empty `update_check`
+object, as enabled defaults under PowerShell StrictMode. Property lookup uses
+the metadata property collection directly; preserve this local adaptation when
+refreshing the shared checker. Only JSON booleans are accepted for policy keys.
+
 `tools/test-instruction-kit.ps1` validates all route and transitive static library
 references. Staged update checks invoke it separately from migration readiness.
 Missing consumer rules can be recovered with `tools/repair-instruction-kit.ps1

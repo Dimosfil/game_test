@@ -1,6 +1,262 @@
 # Moving-army combat and AI performance
 
-## C23 completed evidence; C24 diagnostic in progress
+## C28 long candidate-only — scoped margin retained; strict FPS FAILED
+
+C28 status decision: retain the bounded managed HUD index-prefix cleanup as a
+local CPU-margin optimization: repeated4/4 matched WorldLabels median/p95 lead,
+272 tests and full-quality ordinary30 verification. This is NOT strict FPS
+acceptance or proof of a20ms cause; long30 retains12slow/2 >20ms/max24.7390ms.
+C29 is prepared only, fresh capture consent pending; no C29 recording has run.
+The prepared profile selector requires fresh process lifetime/image/mainTID,
+profile-matched native anchor calibration and actual scheduler QPC coverage;
+no old C23/C26 epoch, PID or native cause is transferable.
+
+Все3 fresh launches завершены: **30 eligible боёв/52007frames**,12 >16.667ms,
+2 >20ms,2 >21ms,0 >25ms,max24.7390ms. Whole p95/p99/real20Hz и full800/
+near720 gates30/30; trial p99 range8.8087–14.4300ms не является every-frame
+гарантией. Run1:17344frames/9slow/max24.7390ms; Run2:17312/3/max23.1313ms;
+Run3:17351/0/max16.1276ms. **Устранение всех20–21ms кадров не достигнуто.**
+
+Focus/clamps/source events0, observer complete, source214 exact/combined788binary
+identity pass; full1600×900/4MSAA/Ultra/shadow100/D3D11 и исходный gameplay hash
+сохранены. Ordinary GUI native-query attempts0, MainLoop/native-wait/GameStall
+probes off; отсутствие их измерений не означает отсутствие waits. Editor CPU
+около1.2cores — только background context. Counter totals7096 native vertex
+uploads/44911 exact reuse. Это все candidate-only прогоны, не long paired control;
+локальный elapsed margin lead4/4 относится к отдельному ABBA выше/ниже.
+
+Source-dedup52007 GUI frames/104014calls/52007Repaints: WorldLabels median/p95
+single .2243/.3890ms,all .5480/.8458ms. Logical geometry median single732indices/
+61bars,all4164/347,max5280/440; nested UploadGeometry и immediate Draw сохранены
+отдельно. WorldLabels включает Begin/Add/projection и вложенные upload/draw,
+не является exclusive CPU временем index preparation.
+
+Worst Run1 all trial2 frame12996/tick43=24.7390ms: previous source12995
+View.9238ms,GUI7.1143ms,WorldLabels2.1963ms,UploadGeometry.7030ms,
+Prepare6.0394ms,Draw1.7572ms; GCCollect serialized0ms (availability не включена в этот compact helper). Second Run2 all trial3
+frame16137/tick226=23.1313ms: previous source16136 GUI2.5133ms,
+WorldLabels.7890ms,Prepare3.7564ms,Draw1.2485ms,GCCollect0ms. Эти overlapping
+previous-completed scopes не локализуют оставшийся wall gap и не доказывают
+causal regression/fix. Все12tails и ±2frame neighborhoods сохранены.
+[C28 long summary/provenance](../../../Builds/Evidence/Iteration06/HealthIndexCycle28Long30/Cycle28LongSeriesAnalysis/cycle28-long-summary.json).
+
+## C26 diagnostic chain verified; captured JIT source owner unresolved
+
+Fresh271/271 tests36.49s/compile0errors0warnings include an actual Editor Mono
+positive fixture with matching method identity/range. Guarded dual builds pass;
+post-build source214 is exact and binary394 captured (source manifest7CF63511…
+C2335,binary0D4D123E…E3E1E). Actual controlled GAME oracle verifies independent
+direct/raw DMP context→FrozenPost atomic request→own-game post-run identity,
+PC echo and QPC after Resume AND all trial NativeClockEnd values. Positive
+LookupFixture has exact method name/range21B/offset0. Actual joins736→737=
+injected737 and816→817 use MainLoop PreviousSampleFrame, not heartbeat labels.
+Both captured PCs return explicit NoJIT despite the positive API fixture; this
+is diagnostic integration success, not a captured JIT source owner or FPS fix.
+[Actual oracle chain](../../../Builds/Evidence/Iteration06/GameStallOracleCycle26/c26-oracle-summary.json).
+[Build proof](../../../Builds/Evidence/Iteration06/Cycle26Verification/build-eval.json),
+[test proof](../../../Builds/Evidence/Iteration06/Cycle26Verification/EditMode/editmode-results.json).
+
+Natural C26A retains8 battles/13600frames. Its only >1000/60/20/21/25ms sample
+is manually suspended/dump-inflated253.0669ms completed756, joined through actual
+PreviousSample755. Independent raw context/request/Game identity/positive Mono
+fixture/QPC chain passes; requested native PC explicit NoJIT. Only first trial
+1583/1583 is focused; the other seven trials total12017 unfocused frames.
+One clamp is in the captured first trial. Other13599frames max15.246ms remain
+instrumented/mostly-unfocused, not clean ordinary acceptance or causal observer
+effect proof. Hash/quality unchanged. Helper CPU1281.25ms/130669.24ms, budget
+not exhausted, helper ended on game exit. Strict FPS/source-owner goal remains
+open. [Natural chain](../../../Builds/Evidence/Iteration06/GameStallNaturalCycle26A/c26-natural-summary.json).
+
+## C27 requested presentation-model contrast rejected
+
+C27 ordinary ABBA завершён на тех же214source/394binary: все8 боёв eligible,
+13073frames,10 >16.667ms,3 >20ms,0 >21/25ms,max20.2544ms. Whole p95/p99/
+20Hz8/8, bands7/8; **strict FPS FAILED**. Default A+D:6784frames/3slow/
+1 >20ms; requested BitBlt B+C:6289/7slow/2 >20ms,max20.1861ms. Candidate
+median хуже во всех4 matched selection contrasts (+.2917…+.8761ms), повторного
+выигрыша нет; C all-selection Full800p99=20.1861ms сохранён как failure.
+Focus/clamps/source events0; probes off, hash/fullquality прежние. Editor CPU
+около1.23 cores — aggregate context, не причина кадра. Actual swap effect
+не измерен: CLI requested-only, threading mode его не доказывает. Кандидат
+отклонён, production default сохранён; расширение30 не выполнялось.
+[C27 ABBA](../../../Builds/Evidence/Iteration06/SwapChainCycle27ABBA/Cycle27SeriesAnalysis/cycle27-abba-summary.json).
+
+## C28 actual bounded index-prefix comparison
+
+C28 ABBA завершён:272/272 tests40.47s,compile0/0,dualbuild success,
+source214 exact, combined control/candidate binary788. Managed index-prefix
+reuse даёт повторяемый WorldLabels elapsed margin lead4/4 contrasts. Pooled
+selection1 median/p95 .2270/.4014→.2200/.3744ms; all .5912/.9666→.5494/.8584ms.
+Все13956 source frames dedup/aligned/completed,2GUIcalls/1Repaint на frame;
+logical geometry median single732indices/61bars,all4164/347,max5280/440.
+TotalUploadMs — только nested UploadGeometry, не подготовка и не exclusive CPU.
+
+Все8 обычных боёв eligible:13956frames,15 >16.667ms,4 >20ms,2 >21ms,
+1 >25ms,max32.4718ms. Whole p95/p99/20Hz8/8,bands7/8; **strict FPS FAILED**.
+Control6941frames/3slow/max18.3543ms; candidate7015/12slow/max32.4718ms.
+B-all early ticks1–8 содержит10slow и все4 >20ms: Full800p95/p99
+20.7805/32.4718ms,near72019.2610/32.4718ms. Этот cluster сохранён, но один
+bounded launch не доказывает causal regression. Focus/clamps/source events0,
+ordinary probes off, fullquality/hash прежние; Editor CPU~1.2cores только context.
+Повторяемый scoped margin lead допускает дальнейшую проверку, не FPS-fix claim.
+[C28 ABBA/provenance](../../../Builds/Evidence/Iteration06/HealthIndexCycle28ABBA/Cycle28SeriesAnalysis/cycle28-abba-summary.json).
+
+C28 measurement contract: logical LatestIndices remains actual drawn prefix,
+separate from retained managed high-water. Deduplicate completed/aligned
+GuiSections.Frame, retaining Calls/RepaintCalls. WorldLabelsMs includes
+projection/filtering/Begin/Add plus nested upload/draw. No standalone serialized
+HealthBarPrepare scope exists. TotalUploadMs excludes AddRectangle/index-list
+writes; never relabel it preparation or subtract nested scopes into exclusive CPU.
+C27 only10slow-frame conditioned health counts are retained:492…5280 indices,
+328…3520 vertices,41…440 bars. All-frame distributions unavailable without another
+parse; these ranges do not establish a20ms owner. C28 actual ABBA and long summaries retain all-frame
+logical counts and WorldLabels distributions from their single profile parses.
+
+## C25 actual Read-window proof
+
+C25 passed254 tests37.11s/compile0errors0warnings and froze208source/394binary.
+Its20ms controlled oracle independently validates v2/80B, sameReadWindow then
+full-frozen callbacks, raw DMP/direct AMD64 context equality and one Resume1.
+Actual anchor716 joins MainLoop PreviousSample716/completed717=injected717;
+the second anchor872/heartbeat872EOF joins completed873, never automatically
+the heartbeat frame. Both are diagnostic captures, not ordinary FPS evidence.
+[Oracle proof](../../../Builds/Evidence/Iteration06/GameStallOracleCycle25/c25-oracle-summary.json).
+
+Natural C25A has8 battles/13438frames,5 >1000/60ms,2 >20/21/25ms,max358.8035ms.
+Both >20ms samples are manually suspended/dump-inflated completed2609/10290,
+joined through actual PreviousSample2608/10289 in epochs2/6. Direct/raw DMP
+RIP/RSP/RBP equality, same Read anchor, frozen callbacks,prior0/Resume1/no
+uncertainty pass. Pre-trigger native Read ages17.3326/16.1792ms differ from
+latest-stage ages7.5278/16.1792ms. They are elapsed-window lower bounds, not
+full post-dump wall or measured method duration. Other13436frames remain a
+diagnostic cohort:3 >1000/60ms,max18.9953ms,0 >20ms; do not call them clean
+ordinary acceptance. Focus13438/13438,2clamps in capture trials, original hash/
+quality retained. Helper CPU1203.125ms/81206.5082ms; active mean1.5327ms,
+max9.5785ms,wait failures0. Dump budget ended in epoch6, so later battles have
+no guaranteed continuous watcher coverage. Source owner and strict FPS goal
+remain open. [Natural proof](../../../Builds/Evidence/Iteration06/GameStallNaturalCycle25A/c25-natural-summary.json).
+
+C26 addresses unknown own-game JIT PC attribution only. A final untimed hook,
+after all trial durations/focus/GC and volley PNG, reads max2 atomic requests
+from its own run's dumper/jit-requests.json, total<=16KB. Validate protocol1,
+exact PID/native FILETIME decimal string/map nonce/known sample epoch and
+bounded nonzero hexPC. The helper publishes only after certain Resume1,
+sameReadWindow/frozen callbacks and direct/DMP context match; request metadata
+comes from FrozenPostContext. A same-directory CreateNew temp+atomic Move/
+Replace carries cumulative verified requests. Missing/late/malformed input is
+explicit unavailable, not runtime invocation or permission for a new capture.
+
+WindowsGameStallSymbols lazily queries an already-loaded Mono DLL via seven
+official exports: domain_get,jit_info_table_find,jit_info_get_method,
+jit_info_get_code_start/get_code_size,method_full_name,mono_free. Require own
+PID/mainTID/current domain, positive containing JIT range and UTF8 name<=16KB;
+free allocated names in finally. No LoadLibrary, method execution, full heap,
+other-app data or source-quality changes. This is current JIT-table mapping of
+an older capturedPC, not guaranteed capture-time code lifetime, a full managed
+stack or elapsed CPU attribution. Root owns tests/builds/new cohort. Official
+[Unity Mono accessors](https://raw.githubusercontent.com/Unity-Technologies/mono/unity-main/mono/metadata/appdomain.h),
+[method-name ABI](https://raw.githubusercontent.com/Unity-Technologies/mono/unity-main/mono/metadata/debug-helpers.h),
+[mono_bool/free ABI](https://raw.githubusercontent.com/Unity-Technologies/mono/unity-main/mono/utils/mono-publib.h).
+
+### C26 focused module passport: own-capture JIT attribution
+
+Owner boundaries and source of truth:
+
+| Module | Owns | Consumes / publishes | Excludes |
+| --- | --- | --- | --- |
+| WindowsGameStallProbe | Main-thread native identity, active sample epochs and v2/80B seqlock heartbeat/Read anchor | MainLoop Update/EOF/Read callbacks; external reader contract | No dump, method lookup or file I/O |
+| External C26 GameStallDumper under ignored Builds/Scratch | Exact root-owned process/thread handles, synchronized capture, one Resume cleanup and verified request publication | FrozenPostContext identity/anchor/directPC; atomic dumper/jit-requests.json | No other app data, arbitrary invocation, full heap or system trace |
+| GameStallSymbolRequests | One final bounded file read, own-run request validation, fixed positive fixture, query clock brackets and CreateNew report | Caller evidence directory and inactive owned probe; game-stall-jit-symbols.json | No request-supplied path, timed-loop I/O or wait for late publisher |
+| WindowsGameStallSymbols | Already-loaded Mono export binding and current-domain PC→method/range/offset | Seven official Mono APIs; GameStallSymbolEvidence value DTO | No file access, runtime DLL loading, arbitrary method execution or elapsed-duration inference |
+| SessionPerformanceProfile.Combat final hook | Ordering and opt-in lifetime | Resolve only after all trial seconds/focus/GC, volley PNG, drained final pause; before StopMainLoopBoundaryProbe/Finish | No hook in ordinary flag-off capture or active sample |
+
+Request protocol1 is distinct from mapping protocol2: one/two unique capture
+indices1..2, ownPID/exact native FILETIME string/map nonce, epoch1..completed
+sampleEpoch, positive ReadQPC, anchor/current frame delta0..1, bounded nonzero
+hexPC. Reader opens only its constructed own-run path with Read|Delete sharing,
+checks actual opened length<=16384 and exact bounded bytes with strict UTF8.
+Atomic replacement can yield an older coherent batch; report only requests
+actually read. Missing/late/invalid input is unavailable/rejected, never an
+implicit retry or extra capture. Output uses CreateNew to preserve earlier
+evidence. No watcher or publisher remains active merely to obtain a missing name.
+
+The native resolver binds only the already-loaded Mono runtime; identity/current
+domain are rechecked. Public mono_jit_info_table_find excludes trampolines,
+including its AOT fallback, before mono_jit_info_get_method is used. Lookup must
+remain in a normal main-thread hook, never an async signal/profiler callback.
+Require PC inside the returned positive code interval; returned method-name
+storage is strict UTF8/bounded16KB and always mono_free'd. Do not read opaque
+MonoJitInfo layout offsets to bypass a missing export or unsupported result.
+[Public non-trampoline contract and implementation](https://raw.githubusercontent.com/Unity-Technologies/mono/unity-main/mono/metadata/jit-info.c).
+No explicit path/file I/O is performed by the resolver. Public find has a Mono
+AOT fallback that may load internal runtime metadata; do not claim a transitive
+zero-I/O guarantee. Its untimed placement is mandatory.
+
+Report NativeAvailable, NativeFixtureMatched, per-request availability/failure,
+PC/code range/offset, lookup UTC and raw native QPC brackets separately. A
+completed report may contain unavailable names: offline proof must require the
+positive fixture and exact request/capture linkage before trusting a mapping.
+The fixed NoInlining LookupFixture is the only intentionally called fixture;
+captured request methods are never executed. Current mapping after the run does
+not prove the code existed unchanged at capture time or reconstruct its callers.
+
+Tests are owned by root: GameStallSymbolRequestTests verifies identity/budgets/
+schema failures and active-window guard; GameStallProbeTests protects protocol/
+lifecycle. The actual Editor Mono positive fixture independently exercises
+method identity and code-range matching. These are source/native integration
+checks, not a standalone captured-owner result. Final frozen source/test/
+binary preparation and actual own-GAME evidence are recorded above. The API
+fixture succeeds while actual requested native PCs are unavailable; do not
+claim a captured JIT owner or elapsed method cost from that outcome.
+
+## C24 GAME-only watchdog verified
+
+C24 passed253 tests/compile0errors0warnings and froze208source/394binary;
+graphics/gameplay quality is unchanged. Its external helper targets only the
+fresh root-owned GAME, verifies retained PID/path/native startFILETIME/mainTID/
+nonce/seqlock identity, requests one suspend increment and synchronizes via
+GetThreadContext. Require prior0,16B-aligned1232B AMD64 CONTROL|INTEGER,
+unchanged trigger heartbeat, exactly one Resume in finally with return1; any
+uncertain helper/native cleanup requires parent termination of its own GAME.
+Normal|ThreadInfo excludes heap; no external app data or system trace. Dump and
+high-resolution-polling cohorts are diagnostic from start, even without a dump.
+
+Retain two failed temporal oracles:80ms Retry1 captured later frame713 instead
+of711; initial20ms Short progressed from stage2 to4 before synchronized context
+and correctly produced no dump. Controlled20ms ShortRetry1 then passed:
+injected frame798/epoch1/stage2 matches trigger and stable context; independent
+raw DMP/direct-context RIP/RSP/RBP equality passes. Suspend prior0/Resume1,
+no uncertainty, both children exit0/no kills and208/394 pre/post identity.
+Frame798278.923ms contains253.0166ms owned suspension, not a natural tail.
+Source review/fake native failure fixtures alone never prove actual capture.
+[Mechanism and failures](../../../Builds/Evidence/Iteration06/Cycle24Verification/mechanism-plan.md),
+[short actual oracle](../../../Builds/Evidence/Iteration06/GameStallOracleCycle24ShortRetry1/c24-oracle-summary.json).
+
+Natural C24A is8 battles/13982frames,1 >1000/60ms,1 >20ms,0 >21/25ms,
+max20.1783ms at selection1 trial1 frame918/tick97. Focus13982/13982,clamps0,
+whole p95/p99/20Hz8/8, original hash/quality retained; no injection. Helper
+captures/wait failures0, ownCPU953.125ms/129304.899ms; active polling mean1.5899ms,
+max11.1616ms. This is not ordinary acceptance or causal observer-effect proof.
+Its20.1783ms resume loop partitions into17.0523ms Read→EOF,3.0599ms EOF→Early,
+.0661ms Early→Read, each below stale-stage threshold18ms. Native16-anchor
+calibration validates boundary QPC, not exact per-frame heartbeat/GUI/Present
+timestamps. Short GUI/View/Prepare/Draw and GCCollect0 do not identify the
+remaining owner. [Natural A](../../../Builds/Evidence/Iteration06/GameStallNaturalCycle24A/c24-natural-summary.json).
+
+C25 introduces an opt-in v2/80B diagnostic protocol, preserving0..63 offsets
+except version and appending LastReadSampleQpc64,LastReadSampleFrame72,reserved76.
+One active Read atomically writes its fresh nativeQPC/frame; Early/EOF retain;
+Begin/End/Disable reset0/−1. Validate exact version/size/reserved values, same
+clock/identity/epoch and anchor frame current or current−1. No anchor exists
+before the first active Read. Helper Read-to-poll age>=16ms is separately
+reported from latest-heartbeat age, with synchronized context/anchor checks.
+It samples a near-budget window:16ms is not evidence that an uninstrumented
+frame would exceed16.667ms. No exact Stopwatch-frame boundary or current-frame
+attribution is invented. Preserve C24 evidence and use a new C25 source/test/
+build cohort. No production tuning, quality reduction or new system trace is
+part of this diagnostic mechanism. [C25 plan](../../../Builds/Evidence/Iteration06/Cycle25Verification/mechanism-plan.md).
+
+## C23 completed evidence
 
 C23 reused frozen C22 source204/binary394 without changing quality or gameplay.
 Ordinary A/B/C retain30 battles/52025 frames:10 >1000/60ms,7 >20ms,6 >21ms,
@@ -38,10 +294,8 @@ execution. Never transfer this earlier process's ETL to later ordinary196ms.
 [scheduler limits](../../../Builds/Evidence/Iteration06/NativeTraceCycle23/native-analysis/scheduler-verdict.md),
 [GPU limits](../../../Builds/Evidence/Iteration06/NativeTraceCycle23/native-analysis/gpu-review.md).
 
-C24 is an in-progress opt-in watchdog/minidump diagnostic of the owned GAME
-process only. No external app data, new system trace or quality reduction is
-part of that scope. Do not claim a fix or passed verification before evidence.
-Dump-induced suspension/overhead must be flagged separately from natural tails.
+C24 subsequent verification and limitations are recorded above; it is not an
+FPS fix. Dump-induced suspension/overhead remains separate from natural tails.
 The optional minimized-UI control remains unanswered and unperformed.
 
 ## C22 callback-local screen-height cleanup — completed, no tail-fix acceptance

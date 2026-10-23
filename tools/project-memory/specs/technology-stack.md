@@ -28,7 +28,7 @@ stack facts, commands, runtime assumptions, and operational notes here.
 | Input/color | Input Manager, Gamma | ProjectSettings.asset | activeInputHandler=0; m_ActiveColorSpace=0 |
 | Backend/storage | Local versioned JSON snapshot/replay | GameHost, Simulation/Match.Persistence | No external product service or SC2 format compatibility |
 | Editor integration | Pipeline 0.8.0-exp.1 | manifest/lockfile, live CLI/MCP probe | Persistent project Editor ready in batchmode |
-| Tests | Test Framework 1.6.0, transitive | Resolved packages-lock entry, scoped test source manifests | Current C22: 246/246, 35.91s, compile 0/0; docs/sc2/current-iteration.md and docs/sc2/testing.md. GI remediation 231/231 is an earlier snapshot. |
+| Tests | Test Framework 1.6.0, transitive | Resolved packages-lock entry, scoped test source manifests | C26 preparation:271/271,36.49s,compile0/0; source214/binary394 and guarded dual builds verified. Captured GAME oracle is separate. Current status: docs/sc2/current-iteration.md; GI remediation231/231 is historical. |
 | Multiplayer tooling | Multiplayer Center 1.0.1 | manifest/lockfile | Not a gameplay transport/server |
 | CLI | 1.0.0-beta.14 | self-update/--check, 2026-10-22 | Current/latest matched; Editor/Pipeline unchanged |
 | UI command data | Catalog-derived production and required rts-ui.json layout | UiCommandCatalog, ui-ru.json, UiCommandCatalogTests | Shared input/caption shortcuts and resource localization; no independent gameplay prices |
@@ -42,6 +42,7 @@ stack facts, commands, runtime assumptions, and operational notes here.
 | Navigation scratch | Per-Match reusable A* arrays/heap; exact allowed nearest-centre shortcut | Simulation/Match.Navigation.cs, NavigationWorkspaceTests | Exclusive synchronous workspace, independent saved routes, blocked/outside fallback and old row-major ties |
 | Moving AI profiling | Ordinary Bot1, two400 formations, real attack-move/combat | Same combat harness with -MovingAI/-CombatTicks240 | Accepted AI commands, distinct movers, shot overlap, raw frame stages and rare-tail metrics; original supply/costs retained |
 | GUI cycle diagnostics | Opt-in Windows QueryThreadCycleTime | Diagnostics/WindowsCpuProbe.cs, BattleHud.cs, SessionPerformanceProfile.Combat.cs | C21: native-wait flag only; ordinary additional read attempts zero; unavailable and partial intervals explicit; raw cycles are not CPU milliseconds. Contract: rts-moving-ai-performance.md. |
+| Own-game tail diagnostics | Windows native QPC/seqlock mapping, external owned-process minidump, untimed Mono public JIT accessors | Diagnostics/WindowsGameStallProbe.cs, WindowsGameStallSymbols.cs, GameStallSymbolRequests.cs | C26 query runs only after all timed counters/volley PNG/final pause. Own-run max2/16KB requests; no remote invocation/full heap/system trace. Post-run PC mapping is not method CPU time or FPS acceptance. Focused passport: rts-moving-ai-performance.md. |
 
 ## Commands
 

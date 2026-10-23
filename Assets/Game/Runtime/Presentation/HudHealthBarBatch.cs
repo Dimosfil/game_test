@@ -32,6 +32,8 @@ namespace ColonyRTS.Presentation
         };
         readonly List<HealthVertex> vertices = new List<HealthVertex>();
         readonly List<uint> indices = new List<uint>();
+        // Retained managed storage is not the current submitted prefix.
+        int ActiveIndexCount=>checked(vertices.Count/4*6);
         readonly List<HealthVertex> committedGeometry = new List<HealthVertex>();
         bool committedGeometryValid;
         Mesh mesh;
@@ -84,9 +86,9 @@ namespace ColonyRTS.Presentation
             {
                 int capacity = Math.Max(vertexCapacity, Math.Max(128, vertices.Capacity * 2));
                 vertices.Capacity = capacity;
-                indices.Capacity = Math.Max(indexCapacity, capacity / 4 * 6);
+                indices.Capacity = Math.Max(indices.Capacity,Math.Max(indexCapacity, capacity / 4 * 6));
             }
-            vertices.Clear(); indices.Clear();hasGeometry=false;
+            vertices.Clear();hasGeometry=false;
             BarCount = DrawCalls = 0; pixelHeight = screenHeight; viewport = worldViewport;
         }
 
@@ -104,13 +106,10 @@ namespace ColonyRTS.Presentation
             float x0 = Mathf.Max(source.xMin, viewport.xMin), x1 = Mathf.Min(source.xMax, viewport.xMax);
             float y0 = Mathf.Max(source.yMin, viewport.yMin), y1 = Mathf.Min(source.yMax, viewport.yMax);
             if (x1 <= x0 || y1 <= y0) return;
-            uint start = (uint)vertices.Count;
             vertices.Add(new HealthVertex(new Vector3(x0, pixelHeight - y0, 0),color));
             vertices.Add(new HealthVertex(new Vector3(x1, pixelHeight - y0, 0),color));
             vertices.Add(new HealthVertex(new Vector3(x1, pixelHeight - y1, 0),color));
             vertices.Add(new HealthVertex(new Vector3(x0, pixelHeight - y1, 0),color));
-            indices.Add(start); indices.Add(start + 1); indices.Add(start + 2);
-            indices.Add(start); indices.Add(start + 2); indices.Add(start + 3);
             var minimum=new Vector3(x0,pixelHeight-y1,0);
             var maximum=new Vector3(x1,pixelHeight-y0,0);
             if(hasGeometry){geometryMin=Vector3.Min(geometryMin,minimum);geometryMax=Vector3.Max(geometryMax,maximum);}
@@ -128,7 +127,7 @@ namespace ColonyRTS.Presentation
         {
             // Managed preparation may reserve for every observed potential bar;
             // native storage follows only the actual submitted geometry high-water.
-            int requiredVertices=vertices.Count,requiredIndices=indices.Count;
+            int requiredVertices=vertices.Count,requiredIndices=ActiveIndexCount;
             bool changed=false;
             if(requiredVertices>VertexCapacity)
             {
@@ -149,7 +148,7 @@ namespace ColonyRTS.Presentation
 
         bool MatchesCommittedGeometry()
         {
-            if(!committedGeometryValid||vertices.Count!=committedGeometry.Count||indices.Count!=uploadedIndices)return false;
+            if(!committedGeometryValid||vertices.Count!=committedGeometry.Count||ActiveIndexCount!=uploadedIndices)return false;
             for(int i=0;i<vertices.Count;i++)
             {
                 var current=vertices[i];var previous=committedGeometry[i];
@@ -162,8 +161,9 @@ namespace ColonyRTS.Presentation
 
         bool UploadGeometry()
         {
+            int activeIndices=ActiveIndexCount;
             // Empty frames retain native storage and issue neither upload nor draw.
-            if(indices.Count==0)return false;
+            if(activeIndices==0)return false;
             if(MatchesCommittedGeometry())
             {
                 uploadedBars=BarCount;ExactGeometryReuseCount++;
@@ -179,24 +179,40 @@ namespace ColonyRTS.Presentation
             // topology, including after clipping. Retain its initialized prefix;
             // only a new actual high-water or recreated index buffer needs data.
             // Upload it before vertices; existing submitted ranges remain valid.
-            if(indices.Count>initializedIndices)
+            if(activeIndices>initializedIndices)
             {
-                mesh.SetIndexBufferData(indices,0,0,indices.Count,MeshUpdateFlags.DontRecalculateBounds);
-                initializedIndices=indices.Count;IndexUploadCount++;
+                // Extend the invariant managed prefix only when a native upload
+                // actually needs it. A smaller repaint never rewrites its tail.
+                EnsureManagedIndexPrefix(activeIndices);
+                mesh.SetIndexBufferData(indices,0,0,activeIndices,MeshUpdateFlags.DontRecalculateBounds);
+                initializedIndices=activeIndices;IndexUploadCount++;
             }
             mesh.SetVertexBufferData(vertices,0,0,vertices.Count,0,MeshUpdateFlags.DontRecalculateBounds);
             VertexUploadCount++;
             var bounds=new Bounds();bounds.SetMinMax(geometryMin,geometryMax);
-            var descriptor=new SubMeshDescriptor(0,indices.Count,MeshTopology.Triangles){
+            var descriptor=new SubMeshDescriptor(0,activeIndices,MeshTopology.Triangles){
                 baseVertex=0,firstVertex=0,vertexCount=vertices.Count,bounds=bounds
             };
             mesh.SetSubMesh(0,descriptor,MeshUpdateFlags.DontRecalculateBounds);
             mesh.bounds=bounds;
-            uploadedIndices=indices.Count;uploadedBars=BarCount;
+            uploadedIndices=activeIndices;uploadedBars=BarCount;
             uploadedVertices=vertices.Count;
             committedGeometry.Clear();committedGeometry.AddRange(vertices);
             committedGeometryValid=true;
             return true;
+        }
+
+        void EnsureManagedIndexPrefix(int required)
+        {
+            if(indices.Count>=required)return;
+            // Reserve before appending so each complete generated quad needs no
+            // allocation and a failed native upload can retry the same prefix.
+            if(indices.Capacity<required)indices.Capacity=GrowCapacity(indices.Capacity,required);
+            for(uint start=(uint)(indices.Count/6*4);indices.Count<required;start+=4)
+            {
+                indices.Add(start);indices.Add(start+1);indices.Add(start+2);
+                indices.Add(start);indices.Add(start+2);indices.Add(start+3);
+            }
         }
 
         public void Draw()=>Draw(false);
@@ -213,12 +229,12 @@ namespace ColonyRTS.Presentation
                         FirstPreviousVertices=uploadedVertices,FirstPreviousIndices=uploadedIndices,FirstPreviousBars=uploadedBars };
                 previousCompleted=diagnostic.Completed;
                 diagnostic.Completed=false;diagnostic.RepaintCalls++;
-                diagnostic.LatestVertices=vertices.Count;diagnostic.LatestIndices=indices.Count;diagnostic.LatestBars=BarCount;
+                diagnostic.LatestVertices=vertices.Count;diagnostic.LatestIndices=ActiveIndexCount;diagnostic.LatestBars=BarCount;
                 diagnostic.LastUploadMs=diagnostic.LastImmediateDrawMs=-1;
             }
             try
             {
-                if(indices.Count==0)
+                if(ActiveIndexCount==0)
                 {
                     if(profiling)diagnostic.EmptyCalls++;
                     completed=true;return;

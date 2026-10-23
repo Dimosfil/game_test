@@ -41,8 +41,13 @@ See `tools/AGENT_RUNBOOK.md` for Unity access and current test/build commands.
   `CHANGELOG.md`, or `INDEX.md`. When the
   accepted source is newer, enumerate and apply pending accepted migrations if
   enabled; absent `auto_apply_pending_migrations` defaults to `true`. Skip only
-  for explicit `false` or a concrete blocker, and report the pending count.
+  for explicit JSON `false` with metadata path/key/value evidence or a concrete
+  blocker, and report the pending count. Helper limitations are not opt-outs.
   Never inspect `updates/` during this startup check.
+- When enabled and pending, read and apply the listed accepted migrations now,
+  verify file changes, record metadata, then recheck version and pending count.
+  Require no extra command or confirmation. Missing policy keys mean enabled;
+  invalid non-boolean values are configuration blockers, not opt-outs.
 - Treat “do/follow strictly by GI” and equivalents as strict compliance with all
   loaded rules. Report a blocked operation precisely and continue independent
   authorized work.

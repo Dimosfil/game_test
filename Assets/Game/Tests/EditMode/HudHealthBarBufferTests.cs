@@ -506,6 +506,69 @@ namespace ColonyRTS.Tests
         }
 
         [Test]
+        public void RetainedLargerIndexPrefixNeverSubmitsStaleTrianglesAfterClippingEmptyOrRegrowth()
+        {
+            var bounds=new Bounds(new Vector3(38,56,0),new Vector3(16,8,0));
+            batch.Begin(3,100,Viewport);
+            var expected=new Geometry();
+            for(int i=0;i<3;i++){AddInsideBar();InsideGeometry(expected);}
+            Assert.That(Upload(),Is.True);
+            AssertGeometry(expected,bounds);
+            long initialIndexUploads=batch.IndexUploadCount;
+            int vertexCapacity=batch.VertexCapacity,indexCapacity=batch.IndexCapacity;
+            long reserves=batch.BufferReserveCount;
+
+            // One surviving background quad, with the fill fully outside the viewport.
+            batch.Begin(1,100,Viewport);
+            batch.Add(new Rect(30,40,16,8),new Rect(0,0,2,2),Fill);
+            expected=new Geometry();expected.Quad(30,60,46,52,Color.black);
+            Assert.That(Upload(),Is.True);
+            AssertGeometry(expected,bounds);
+            CollectionAssert.AreEqual(new[]{0,1,2,0,2,3},Mesh.GetIndices(0),
+                "The earlier larger prefix must not contribute any submitted triangles.");
+            Assert.That(batch.IndexUploadCount,Is.EqualTo(initialIndexUploads));
+            AssertCapacity(vertexCapacity,indexCapacity,reserves);
+
+            foreach(bool fullyClipped in new[]{false,true})
+            {
+                batch.Begin(fullyClipped?1:0,100,Viewport);
+                if(fullyClipped)batch.Add(new Rect(0,0,2,2),new Rect(1,1,1,1),Fill);
+                Assert.That(Upload(),Is.False,"Empty actual geometry must submit nothing despite the cached prefix.");
+                Assert.That(batch.DrawCalls,Is.Zero);
+                Assert.That(batch.IndexUploadCount,Is.EqualTo(initialIndexUploads));
+                AssertCapacity(vertexCapacity,indexCapacity,reserves);
+                Assert.That(Mesh.GetSubMesh(0).indexCount,Is.EqualTo(6),
+                    "No-upload empty passes retain native metadata; it is not permission to draw the cached mesh.");
+            }
+
+            // Regrow within the old initialized prefix, extend within spare native
+            // capacity, then exceed it. In every phase the real mesh exposes only
+            // the independently authored active geometry and exact index sequence.
+            foreach(int bars in new[]{2,5,17})
+            {
+                batch.Begin(bars,100,Viewport);expected=new Geometry();
+                for(int i=0;i<bars;i++){AddInsideBar();InsideGeometry(expected);}
+                Assert.That(Upload(),Is.True);
+                AssertGeometry(expected,bounds);
+                if(bars==2)
+                {
+                    Assert.That(batch.IndexUploadCount,Is.EqualTo(initialIndexUploads));
+                    AssertCapacity(vertexCapacity,indexCapacity,reserves);
+                }
+                else if(bars==5)
+                {
+                    Assert.That(batch.IndexUploadCount,Is.EqualTo(initialIndexUploads+1));
+                    AssertCapacity(vertexCapacity,indexCapacity,reserves);
+                }
+                else
+                {
+                    Assert.That(batch.IndexUploadCount,Is.EqualTo(initialIndexUploads+2));
+                    Assert.That(batch.IndexCapacity,Is.GreaterThan(indexCapacity));
+                }
+            }
+        }
+
+        [Test]
         public void DisposeReleasesOwnedMeshAndMaterialWithoutAffectingAnotherBatch()
         {
             var ownedMesh = Mesh;

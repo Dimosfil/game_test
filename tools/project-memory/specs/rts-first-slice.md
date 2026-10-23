@@ -44,6 +44,9 @@ prototype-terran-0.2 от 21.10.2026. Исходные результаты ни
 | Real presentation-path 800-patrol profile | Diagnostics/SessionPerformanceProfile.cs |
 | Real400+400 combat, moving AI, population/GC/clock/tail evidence | Diagnostics/SessionPerformanceProfile.Combat.cs |
 | Opt-in early Update/resume/EOF timestamp and cycle boundaries | Diagnostics/MainLoopBoundaryProbe.cs |
+| Own-game active sample heartbeat and retained native Read anchor (v2/80B) | Diagnostics/WindowsGameStallProbe.cs; lifecycle in SessionPerformanceProfile.Combat.cs |
+| Untimed bounded own-capture request validation and final report | Diagnostics/GameStallSymbolRequests.cs; final Combat hook after all counters/PNG/pause |
+| Current-domain Mono PC→method/range lookup, no invocation or file access | Diagnostics/WindowsGameStallSymbols.cs; contract in rts-moving-ai-performance.md |
 | Полный actual-rules economic tech loop | Assets/Game/Editor/TechnologySmoke.cs |
 
 ## Поведение и инварианты

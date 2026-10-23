@@ -122,9 +122,13 @@ namespace ColonyRTS.Diagnostics
                 result.MainLoopNativeWaitProbeEnabled=nativeWaitProbeRequested;
                 result.GameStallProbeRequested=gameStallProbeRequested;
                 result.GameStallProbeAvailable=gameStallProbe&&gameStallProbe.Available;
+                result.GameStallProtocolVersion=gameStallProbeRequested?(int)WindowsGameStallProbe.ProtocolVersion:0;
+                result.GameStallMappingBytes=gameStallProbeRequested?WindowsGameStallProbe.MappingBytes:0;
                 result.GameStallMapName=gameStallMap;
                 result.GameStallSelfTestDelayMs=selfTestStallDelay;
+                result.GameStallSelfTestFrame=-1;
                 result.GameStallDiagnosticContaminated=gameStallProbeRequested;
+                result.GameStallProcessStartFileTime=gameStallProbe?gameStallProbe.ProcessStartFileTimeText:null;
                 result.MainLoopNativeWaitRecorderScope=nativeWaitProbeRequested?"ProfilerRecorder Default aggregation, all threads; previous-completed-frame samples read at CaptureFrame; markers may overlap/nest and are not summed.":"disabled";
                 result.MainLoopStopwatchFrequency=System.Diagnostics.Stopwatch.Frequency;
                 result.TickTrace.Capacity=combatEndTick+1;result.Coverage.Capacity=combatEndTick+1;
@@ -183,6 +187,7 @@ namespace ColonyRTS.Diagnostics
                 int previousBoundarySampleFrame=Time.frameCount;
                 double sampleStart=Time.realtimeSinceStartupAsDouble,previous=sampleStart;
                 if(gameStallProbe)gameStallProbe.BeginSample();
+                result.GameStallSampleEpoch=gameStallProbe?gameStallProbe.SampleEpoch:0;
                 try
                 {
                 host.TogglePause();
@@ -295,7 +300,16 @@ namespace ColonyRTS.Diagnostics
                     Require(host.Mode==FrontendMode.Playing,"Combat left the real gameplay loop.");
                 }
                 }
-                finally { if(gameStallProbe)gameStallProbe.EndSample(); }
+                finally
+                {
+                    if(gameStallProbe)
+                    {
+                        gameStallProbe.EndSample();
+                        result.GameStallProbeAvailableAtEnd=gameStallProbe.Available;
+                        result.GameStallProbeFailureReason=gameStallProbe.FailureReason;
+                        result.GameStallHeartbeatCountAtEnd=gameStallProbe.HeartbeatCount;
+                    }
+                }
                 int collectionEnd0=GC.CollectionCount(0),collectionEnd1=GC.CollectionCount(1),collectionEnd2=GC.CollectionCount(2);
                 result.GuiThreadCycleReadAttemptsEnd=battleHud.DiagnosticGuiThreadCycleReadAttempts;
                 result.GuiThreadCycleSuccessfulReadsEnd=battleHud.DiagnosticGuiThreadCycleSuccessfulReads;
@@ -421,6 +435,7 @@ namespace ColonyRTS.Diagnostics
             Require(HudIconAtlas.IsReady&&evidence.RuntimeErrors.Count==0,"Combat UI atlas missing or runtime errors present.");
             evidence.WorkerPauseValidated=!host.SimulationPending&&host.Mode==FrontendMode.Paused;
             Require(evidence.WorkerPauseValidated,"Combat final pause did not drain the worker.");
+            if(gameStallProbeRequested)GameStallSymbolRequests.Resolve(directory,gameStallProbe);
             StopMainLoopBoundaryProbe();
             Finish(true);
         }
@@ -465,8 +480,12 @@ namespace ColonyRTS.Diagnostics
             public bool MainLoopNativeWaitProbeEnabled;
             public string MainLoopNativeWaitRecorderScope;
             public bool GameStallProbeRequested,GameStallProbeAvailable,GameStallDiagnosticContaminated,GameStallSelfTestInjected;
-            public string GameStallMapName;
+            public bool GameStallProbeAvailableAtEnd;
+            public string GameStallMapName,GameStallProcessStartFileTime,GameStallProbeFailureReason;
             public int GameStallSelfTestDelayMs,GameStallSelfTestFrame;
+            public int GameStallProtocolVersion,GameStallMappingBytes;
+            public uint GameStallSampleEpoch;
+            public long GameStallHeartbeatCountAtEnd;
             public long MainLoopStopwatchFrequency;
             public NativeClockAnchorEvidence NativeClockStart,NativeClockEnd;
             public double NativeProbeMaxMs;

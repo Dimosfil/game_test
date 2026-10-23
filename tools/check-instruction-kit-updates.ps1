@@ -58,7 +58,7 @@ function Resolve-SourceRepo {
     if (-not [string]::IsNullOrWhiteSpace($ExplicitRepo)) {
         return [string]$ExplicitRepo
     }
-    if ($Kit.update_check -and ($Kit.update_check.PSObject.Properties.Name -contains "source_repo") -and $Kit.update_check.source_repo) {
+    if (($Kit.PSObject.Properties.Name -contains 'update_check') -and $Kit.update_check -and ($null -ne $Kit.update_check.PSObject.Properties["source_repo"]) -and $Kit.update_check.source_repo) {
         return [string]$Kit.update_check.source_repo
     }
     if (($Kit.PSObject.Properties.Name -contains "source") -and $Kit.source -and ([string]$Kit.source -match '\.git$|^https://github\.com/')) {
@@ -119,7 +119,7 @@ function Resolve-SharedLibraryPath {
     if ($env:GENERAL_INSTRUCTIONS_HOME) {
         $candidates += [string]$env:GENERAL_INSTRUCTIONS_HOME
     }
-    if ($Kit.update_check -and ($Kit.update_check.PSObject.Properties.Name -contains "shared_library_path") -and $Kit.update_check.shared_library_path) {
+    if (($Kit.PSObject.Properties.Name -contains 'update_check') -and $Kit.update_check -and ($null -ne $Kit.update_check.PSObject.Properties["shared_library_path"]) -and $Kit.update_check.shared_library_path) {
         $candidates += [string]$Kit.update_check.shared_library_path
     }
 
@@ -175,6 +175,31 @@ if (-not (Test-Path -LiteralPath $InstructionKitPath)) {
 
 $kit = Get-Content -LiteralPath $InstructionKitPath -Raw | ConvertFrom-Json
 
+# Policy belongs to metadata, not to whether this helper edits migration files.
+$updatePolicy = if ($kit.PSObject.Properties.Name -contains 'update_check') { $kit.update_check } else { $null }
+function Get-UpdatePolicyBoolean {
+    param([string]$Name)
+    if ($null -eq $updatePolicy -or $null -eq $updatePolicy.PSObject.Properties[$Name]) { return $true }
+    $value = $updatePolicy.$Name
+    if ($value -isnot [bool]) { throw "Invalid update_check.${Name}: expected a JSON boolean; automatic application policy is unverified." }
+    return $value
+}
+$updateEnabled = Get-UpdatePolicyBoolean 'enabled'
+$autoApply = Get-UpdatePolicyBoolean 'auto_apply_pending_migrations'
+if (-not $updateEnabled) {
+    Write-Host "Instruction update check: disabled (evidence: $InstructionKitPath update_check.enabled=false)"
+    Write-Host 'Pending instruction migrations: unknown (check explicitly disabled)'
+    exit 0
+}
+if ($autoApply) {
+    $policyEvidence = if ($null -ne $updatePolicy -and $null -ne $updatePolicy.PSObject.Properties['auto_apply_pending_migrations']) {
+        'update_check.auto_apply_pending_migrations=true'
+    } else { 'update_check.auto_apply_pending_migrations absent; default=true' }
+    Write-Host "Automatic migration application: enabled (evidence: $InstructionKitPath $policyEvidence)"
+} else {
+    Write-Host "Automatic migration application: disabled (evidence: $InstructionKitPath update_check.auto_apply_pending_migrations=false)"
+}
+
 $sharedPath = Resolve-SharedLibraryPath -Kit $kit -ExplicitPath $SharedLibraryPath -ExplicitRepo $SourceRepo -CachePath $SourceCachePath
 
 if (-not $sharedPath) {
@@ -228,13 +253,6 @@ function Test-MigrationApplied {
 
 Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
 
-$integrityChecker = Join-Path $PSScriptRoot 'test-instruction-kit.ps1'
-if (-not (Test-Path -LiteralPath $integrityChecker -PathType Leaf)) {
-    throw 'Mandatory instruction integrity checker is missing: tools/test-instruction-kit.ps1'
-}
-& $integrityChecker
-if ($LASTEXITCODE -ne 0) { throw 'Instruction references are incomplete; recover the named files from the accepted source.' }
-
 $versionComparison = -1
 if ($installedVersion) {
     try {
@@ -259,8 +277,7 @@ if ($versionComparison -gt 0) {
 }
 
 if (-not (Test-Path -LiteralPath $migrationsPath)) {
-    Write-Host "No migrations folder found at $migrationsPath."
-    exit 0
+    throw "Pending instruction migrations: unknown; migration source is missing: $migrationsPath"
 }
 
 $pending = @(Get-ChildItem -LiteralPath $migrationsPath -Filter "*.md" |
@@ -287,14 +304,22 @@ $pending | ForEach-Object {
 
 if ($Apply) {
     Write-Host ""
-    Write-Host "-Apply is intentionally disabled because it can mark migrations applied before file changes exist."
-    Write-Host "Have an agent apply the pending migration instructions first."
+    Write-Host "-Apply cannot execute agent-authored Markdown migrations or record them before file verification."
+    Write-Host "This helper limitation does not disable the automatic application policy shown above."
+    Write-Host "The agent must apply the pending migration instructions first."
     Write-Host "After verifying the file changes, run with -RecordApplied to update metadata."
     exit 1
 }
 
 if (-not $RecordApplied) {
-    Write-Host "Apply listed migrations, verify file changes, then run with -RecordApplied."
+    if ($autoApply) {
+        Write-Host "Required agent action: apply pending accepted migrations now, before task-specific work; no additional confirmation is required."
+        Write-Host "Migration source: $migrationsPath"
+        Write-Host "Read the listed migration files in order, merge and verify their file changes, then run with -RecordApplied."
+        Write-Host "An availability notice is not completion. Report a concrete blocker if application cannot proceed; never infer disabled policy from helper behavior."
+    } else {
+        Write-Host "Automatic application skipped by the explicit metadata choice; leave migration state unchanged."
+    }
     exit 0
 }
 

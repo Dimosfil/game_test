@@ -1,0 +1,14 @@
+{
+  "TrainKey": "Q",
+  "BuildOrder": ["depot", "barracks", "refinery", "turret", "engineeringbay", "armory"],
+  "TrainOrder": ["worker", "marine"],
+  "HiddenBuildDefinitions": ["command"],
+  "BuildShortcuts": [
+    {"DefinitionId": "barracks", "Key": "B"},
+    {"DefinitionId": "depot", "Key": "D"},
+    {"DefinitionId": "refinery", "Key": "R"},
+    {"DefinitionId": "turret", "Key": "V"},
+    {"DefinitionId": "engineeringbay", "Key": "E"},
+    {"DefinitionId": "armory", "Key": "U"}
+  ]
+}

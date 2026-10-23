@@ -1,0 +1,8 @@
+{
+  "cases": [
+    {"id":"worker-contract", "query":"rts-host-frames.md", "expected_path":"tools/project-memory/specs/rts-host-frames.md"},
+    {"id":"restore-issue", "query":"GI-A01", "expected_path":"tools/project-memory/known-issues.md"},
+    {"id":"research-contract", "query":"ResearchAvailability", "expected_path":"tools/project-memory/specs/rts-research-tech.md"},
+    {"id":"gui-cycle-contract", "query":"WindowsCpuProbe", "expected_path":"tools/project-memory/specs/rts-moving-ai-performance.md"}
+  ]
+}

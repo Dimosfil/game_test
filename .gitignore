@@ -47,6 +47,7 @@ tools/project-memory/embedding-cache/
 tools/project-memory/semantic-corpus*.jsonl
 __pycache__/
 tools/project-memory/devops.local.json
+/config/agent-runtime.local.json
 .repowise/
 tools/summary/*.tmp
 tools/deploy/ftp.local.json

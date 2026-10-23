@@ -90,12 +90,28 @@
     "tools/resolve-gi-command.ps1",
     "tools/select-git-commit-languages.ps1",
     "tools/select-project-language.ps1",
-    "tools/select-system-language.ps1"
+    "tools/select-system-language.ps1",
+    "patterns/PROJECT_MEMORY_SPECIFICATIONS.md",
+    "patterns/RAG_SYSTEM_STRUCTURE.md",
+    "patterns/SEMANTIC_RAG_RETRIEVAL.md",
+    "patterns/FIRST_MESSAGE_HANDLING.md",
+    "patterns/PROJECT_FTP_DEPLOY.md",
+    "patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md",
+    "templates/ARCHITECTURE_MIGRATIONS.template.md",
+    "templates/rag-system.template.json",
+    "templates/semantic-retrieval-evals.template.md",
+    "patterns/AGENT_HARNESS_RUNTIME.md",
+    "patterns/FEATURE_WORKFLOW_CONTRACTS.md",
+    "patterns/MODEL_ROUTING_AND_COST_CONTROL.md",
+    "patterns/PROJECT_TESTING_STRATEGY.md",
+    "templates/ftp.local.template.json",
+    "templates/SUMMARY.template.md"
   ],
   "migration_state": {
     "schema_version": 2,
     "applied_through": "2026.10.17.1__require_unity_live_connection_verification",
     "additional_applied_migrations": [],
     "skipped_migrations": []
-  }
+  },
+  "recovery_manifest": "tools/project-memory/instruction-kit-recovery.json"
 }

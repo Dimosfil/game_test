@@ -1,0 +1,7 @@
+{
+  "name": "ColonyRTS.Simulation",
+  "rootNamespace": "ColonyRTS.Simulation",
+  "references": [],
+  "noEngineReferences": true,
+  "autoReferenced": true
+}

@@ -5,9 +5,23 @@ specific project-local instructions, contracts, memory, and runbooks.
 
 ## Project
 
-`game_test` is a newly initialized Unity 6000.3.24f1 project. `Assets/` is
-currently empty; no gameplay code or saved scenes exist. Product requirements
-and users have not been defined. See `tools/AGENT_RUNBOOK.md` for Unity access.
+`game_test` is a Unity 6000.3.24f1 project implementing an experimental first RTS
+slice toward the StarCraft II recreation plan. Sources/tests/content live under
+`Assets/Game/`, with `Scenes/Frontier.unity`. Read `docs/sc2/current-iteration.md`
+and `tools/project-memory/specs/rts-first-slice.md` before gameplay work.
+The current prototype-terran-0.3 research contracts are in
+`tools/project-memory/specs/rts-research-tech.md`; rendering measurements in
+`tools/project-memory/specs/rts-render-profile.md`. CPU/copy/fog acceleration
+contracts: `tools/project-memory/specs/rts-performance.md`; exclusive worker
+ownership and frame publication: `tools/project-memory/specs/rts-host-frames.md`.
+Mass-combat diagnostics, observed shot pooling and bounded performance evidence:
+`tools/project-memory/specs/rts-combat-performance.md`.
+Moving-army/AI acceptance, tail diagnostics and exact navigation/render changes:
+`tools/project-memory/specs/rts-moving-ai-performance.md`.
+Earlier order/navigation
+contracts remain in `tools/project-memory/specs/rts-orders-navigation.md`; continue from
+`docs/sc2/next-iterations.md` after checking actual evidence.
+See `tools/AGENT_RUNBOOK.md` for Unity access and current test/build commands.
 
 ## Goal And Loading Contract
 
@@ -102,8 +116,8 @@ files are compatibility indexes only and contain no operational rules.
 
 ## Project Memory And Working Areas
 
-- Source, tests, and build output locations are not defined yet; agree on them
-  when the product and technology stack are selected.
+- Product source/tests/content: `Assets/Game/`; product docs: `docs/sc2/`;
+  rebuildable players/evidence/scratch: ignored `Builds/`.
 - Summaries: `tools/summary/`; durable project knowledge:
   `tools/project-memory/`; reusable tooling: `tools/`.
 - Put product behavior, business rules, workflow contracts, architecture
@@ -115,5 +129,5 @@ files are compatibility indexes only and contain no operational rules.
 
 ## Local Commands
 
-See `tools/AGENT_RUNBOOK.md` for available GI commands. Product install,
-run, test, build, and logging commands are not defined yet.
+See `tools/AGENT_RUNBOOK.md` for GI commands, local Editor/MCP recovery,
+test/build entry points and evidence locations.

@@ -1,0 +1,8 @@
+{
+  "name": "ColonyRTS.Tests",
+  "rootNamespace": "ColonyRTS.Tests",
+  "references": ["ColonyRTS.Simulation", "ColonyRTS.Runtime"],
+  "includePlatforms": ["Editor"],
+  "optionalUnityReferences": ["TestAssemblies"],
+  "autoReferenced": false
+}

@@ -199,7 +199,11 @@ if ($routeId -eq "start") {
         $parts.Add((New-ContextSection -Title "RUNBOOK COMMAND HINTS" -Body $hintText))
     }
 
-    if (Test-Path -LiteralPath (Join-Path $projectRoot "tools/project-memory/index_project.py") -PathType Leaf) {
+    if (Test-Path -LiteralPath (Join-Path $projectRoot "tools/project-memory/run-memory.ps1") -PathType Leaf) {
+        $parts.Add((New-ContextSection -Title "PROJECT MEMORY" -Body ('Local SQLite/FTS: .\tools\project-memory\run-memory.ps1 -Node sql stats' + "`n" +
+            'Search with: .\tools\project-memory\run-memory.ps1 -Node sql search "query". Stale indexes do not replace current source checks.')))
+    }
+    elseif (Test-Path -LiteralPath (Join-Path $projectRoot "tools/project-memory/index_project.py") -PathType Leaf) {
         $parts.Add((New-ContextSection -Title "PROJECT MEMORY" -Body ("Search memory with:`n" + 'python .\tools\project-memory\index_project.py search "query" --limit 10')))
     }
     $parts.Add("Startup restore complete. Use targeted searches before reading large files.")

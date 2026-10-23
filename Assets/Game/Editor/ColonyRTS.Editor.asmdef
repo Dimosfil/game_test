@@ -1,0 +1,7 @@
+{
+  "name": "ColonyRTS.Editor",
+  "rootNamespace": "ColonyRTS.Editor",
+  "references": ["ColonyRTS.Runtime", "ColonyRTS.Simulation"],
+  "includePlatforms": ["Editor"],
+  "autoReferenced": true
+}

@@ -1,0 +1,67 @@
+{
+  "Files": [
+    {
+      "Path": "patterns/PROJECT_MEMORY_SPECIFICATIONS.md",
+      "Sha256": "a87f0dd2d5cdbd630d758e4b04b7457b8a97870d8b62249c936d5b153573ef99"
+    },
+    {
+      "Path": "patterns/RAG_SYSTEM_STRUCTURE.md",
+      "Sha256": "ec108d3230161788bbd7ad8293f4108f7c93de7dfbb79f166d454f83665b384b"
+    },
+    {
+      "Path": "patterns/SEMANTIC_RAG_RETRIEVAL.md",
+      "Sha256": "d01445f14c10daba19f6f07a99b539abe33e62ca6fffbd069b3fb07403a31c0c"
+    },
+    {
+      "Path": "patterns/FIRST_MESSAGE_HANDLING.md",
+      "Sha256": "7a3607ed9aa53ad8315b6e45e1f0d0cf3e2fbc29c1b276107759724d1f696698"
+    },
+    {
+      "Path": "patterns/PROJECT_FTP_DEPLOY.md",
+      "Sha256": "d85ab9bbc8d33bdc5d4baf787aebfa1a9c346226bd864ccd67dadd0d643fc1e9"
+    },
+    {
+      "Path": "patterns/SHARED_INSTRUCTIONS_BOOTSTRAP.md",
+      "Sha256": "763585f8662c0281794727412febc7e9ef4b85f0434caae1048bddbd88ba6d0e"
+    },
+    {
+      "Path": "templates/ARCHITECTURE_MIGRATIONS.template.md",
+      "Sha256": "b8612d242fbd67b8b5067062e92cdc642f24b6db0bd8432f0b2e56b42f8d34fc"
+    },
+    {
+      "Path": "templates/rag-system.template.json",
+      "Sha256": "0e248b58588941cfbd790da9ad29307c90096aa2556d2d724b1d0063e05dd5d7"
+    },
+    {
+      "Path": "templates/semantic-retrieval-evals.template.md",
+      "Sha256": "ca1cc15635854c8f4db9ec29b341662bf61a80a383b4e2cca35b619bf558c5b3"
+    },
+    {
+      "Path": "patterns/AGENT_HARNESS_RUNTIME.md",
+      "Sha256": "7ad60e147fa4a95b65a53ebcc81dcf3b1201f7620feef45481a0043d2624e4b4"
+    },
+    {
+      "Path": "patterns/FEATURE_WORKFLOW_CONTRACTS.md",
+      "Sha256": "f3f7051fd3b6c08f8ecc576a36d5f443b8d393deb406a54d87dc3d8a177d70dc"
+    },
+    {
+      "Path": "patterns/MODEL_ROUTING_AND_COST_CONTROL.md",
+      "Sha256": "6b9c55509699d59bbd8b76cb8c2c519c43b3eb54b6fe5a552edac6253dae449c"
+    },
+    {
+      "Path": "patterns/PROJECT_TESTING_STRATEGY.md",
+      "Sha256": "ec7aa6ccbbeeb39a87d3c0df55584fdafba28e4fdcdecbdb0b2865c27061e480"
+    },
+    {
+      "Path": "templates/ftp.local.template.json",
+      "Sha256": "316f4fff46b874ab0cbca72e183e932bd7eb7b68e53ff16fb2ab6662188f83e3"
+    },
+    {
+      "Path": "templates/SUMMARY.template.md",
+      "Sha256": "4839bd7bae33caf130f6de24c85cf135ec68b21fd145e2ee1eda11e3011051cb"
+    }
+  ],
+  "Commit": "a1c737f9ae204e44f3d10361219c10fd66b10ef0",
+  "Source": "https://github.com/Dimosfil/general-instructions.git",
+  "Version": "2026.10.17.1"
+}

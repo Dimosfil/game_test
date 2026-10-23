@@ -2,8 +2,35 @@
 
 ## Project Contracts
 
+- [UI commands](specs/rts-ui-commands.md): catalog-derived production/build menus,
+  shared resource shortcuts, localization and public-boundary checks.
+- [Development tooling](specs/integration-contracts/development-tooling.md): scene
+  preservation, full build provenance, instruction completeness and local FTS.
+- [Known issues](known-issues.md): current resolution status, historical GI audit
+  limitations and links to the detailed verification report.
 - [Unity Pipeline integration](specs/integration-contracts/unity-pipeline.md):
   package ownership, connection lifecycle, targeting, and MCP verification.
+- [SC2 recreation contract](specs/sc2-recreation-contract.md): proposed scope,
+  state ownership, simulation boundaries, invariants and verification.
+- [Reference sources](specs/integration-contracts/connected-projects.md): public
+  documentation boundaries; no installed SC2 integration.
+- [Technology stack](specs/technology-stack.md): verified project baseline.
+- [First RTS slice](specs/rts-first-slice.md): implemented module ownership,
+  gameplay/snapshot/replay invariants, prototype limitations and verification.
+- [Orders and navigation](specs/rts-orders-navigation.md): patrol queues, paid
+  repair, resource rally, group endpoints and derived collision caches.
+- [Research and technology](specs/rts-research-tech.md): shared eligibility,
+  costs/reservations, armor/damage, observation and persistence contracts.
+- [Render measurements](specs/rts-render-profile.md): standalone fixture,
+  graphical-frame gate, native counters, fixed-step load and evidence meaning.
+- [Simulation performance](specs/rts-performance.md): exact fog caching,
+  detached typed copies, allocation ownership and unchanged workload evidence.
+- [Host simulation frames](specs/rts-host-frames.md): exclusive worker ownership,
+  immutable UI publication, clock and pause/save/replay synchronization.
+- [Mass combat performance](specs/rts-combat-performance.md): real400+400 combat,
+  diagnostic ownership, population/throughput gates and allocation comparisons.
+- [Moving combat and AI](specs/rts-moving-ai-performance.md): genuine bot commands,
+  movement/firing overlap, tail diagnosis and unchanged navigation/render contracts.
 
 This folder stores implementation-driving project knowledge for AI agents.
 
@@ -244,19 +271,18 @@ Before enabling vector retrieval, prepare semantic-ready chunks and embedding
 metadata with `patterns/SEMANTIC_RAG_RETRIEVAL.md`. Keep generated files such as
 `tools/project-memory/semantic-corpus.jsonl` ignored.
 
-For a local semantic MVP, build Chroma from exported chunks:
+The local SQL/FTS backend is implemented. Rebuild/export only these configured
+nodes; no vector adapter is installed or enabled:
 
 ```powershell
-python .\tools\project-memory\build_project_memory_index.py rebuild
-python .\tools\project-memory\build_project_memory_index.py export-chunks
-uv run --with chromadb python .\tools\project-memory\build_chroma_index.py rebuild
+.\tools\project-memory\run-memory.ps1 -Node sql rebuild
+.\tools\project-memory\run-memory.ps1 -Node sql export-chunks
 ```
 
 Run RAG health checks and retrieval evals when an eval runner is present:
 
 ```powershell
-python .\tools\project-memory\rag_check.py --skip-vector run
-uv run --with chromadb python .\tools\project-memory\rag_check.py run
+.\tools\project-memory\run-memory.ps1 -Node evals run
 ```
 
 The check should verify generated-ignore rules, count consistency across
@@ -272,9 +298,9 @@ call/dependency, Git-risk, or code-health evidence, configure the optional
 `code_intelligence` section in `rag-system.json` and use:
 
 ```powershell
-python .\tools\project-memory\code_intelligence.py status
-python .\tools\project-memory\code_intelligence.py route "who calls this symbol?"
-python .\tools\project-memory\code_intelligence.py invoke context MySymbol
+.\tools\project-memory\run-memory.ps1 -Node code-intelligence status
+.\tools\project-memory\run-memory.ps1 -Node code-intelligence route "who calls this symbol?"
+.\tools\project-memory\run-memory.ps1 -Node code-intelligence invoke context MySymbol
 ```
 
 Keep the provider disabled until it is separately installed, indexed, and

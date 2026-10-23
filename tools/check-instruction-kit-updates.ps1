@@ -228,6 +228,13 @@ function Test-MigrationApplied {
 
 Write-Host "Instruction kit: installed=$installedVersion available=$latestVersion"
 
+$integrityChecker = Join-Path $PSScriptRoot 'test-instruction-kit.ps1'
+if (-not (Test-Path -LiteralPath $integrityChecker -PathType Leaf)) {
+    throw 'Mandatory instruction integrity checker is missing: tools/test-instruction-kit.ps1'
+}
+& $integrityChecker
+if ($LASTEXITCODE -ne 0) { throw 'Instruction references are incomplete; recover the named files from the accepted source.' }
+
 $versionComparison = -1
 if ($installedVersion) {
     try {

@@ -1,14 +1,16 @@
 {
   "version": 2,
-  "project_id": "replace-with-stable-project-slug",
-  "mode": "hybrid-ready",
+  "project_id": "game_test",
+  "mode": "sqlite-fts",
   "source_groups": [
     {
       "id": "local-instructions",
       "paths": [
         "AGENTS.md",
         "tools/AGENT_RUNBOOK.md",
-        "tools/AGENT_WORKING_AGREEMENTS.md"
+        "tools/AGENT_WORKING_AGREEMENTS.md",
+        "patterns/*.md",
+        "patterns/AGENTS_RUNTIME/*.md"
       ],
       "trust": "project-local",
       "include": true
@@ -45,9 +47,14 @@
     "**/build/**",
     "**/*.log",
     "**/*.lock",
+    "**/*.local.json",
+    "Builds/**",
+    "Library/**",
     "tools/project-memory/*.sqlite",
     "tools/project-memory/*.sqlite-*",
-    "tools/project-memory/vector-index/**"
+    "tools/project-memory/vector-index/**",
+    "tools/project-memory/rag-system.json",
+    "tools/project-memory/retrieval-evals.json"
   ],
   "structured_memory": {
     "kind": "sqlite",
@@ -72,8 +79,8 @@
     "export_path": "tools/project-memory/semantic-corpus.jsonl"
   },
   "embedding_metadata": {
-    "model_ref": "configure-in-project-local-runtime",
-    "provider": "configure-in-project-local-runtime",
+    "model_ref": null,
+    "provider": null,
     "dimensions": null,
     "collection_version": "project-memory-v1",
     "embed_source": "chunks",
@@ -84,7 +91,7 @@
     "provider": "chroma",
     "collection": "project-memory-v1",
     "local_index_path": "tools/project-memory/vector-index/chroma",
-    "embedding_model_ref": "configure-in-project-local-runtime",
+    "embedding_model_ref": null,
     "dimensions": null
   },
   "service_retrieval": {
@@ -245,34 +252,45 @@
     "requires_confirmation_for_full": true,
     "nodes": {
       "manifest": {
+        "enabled": false,
+        "reason": "Source manifest is owned atomically by the SQL node",
         "command": "",
         "status_command": ""
       },
       "sql": {
-        "command": "python .\\tools\\project-memory\\build_project_memory_index.py rebuild",
-        "status_command": "python .\\tools\\project-memory\\build_project_memory_index.py stats"
+        "enabled": true,
+        "command": ".\\tools\\project-memory\\run-memory.ps1 -Node sql rebuild",
+        "status_command": ".\\tools\\project-memory\\run-memory.ps1 -Node sql stats"
       },
       "chunks": {
-        "command": "python .\\tools\\project-memory\\build_project_memory_index.py export-chunks",
-        "status_command": ""
+        "enabled": true,
+        "command": ".\\tools\\project-memory\\run-memory.ps1 -Node sql export-chunks",
+        "status_command": ".\\tools\\project-memory\\run-memory.ps1 -Node sql stats"
       },
       "vector": {
-        "command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py rebuild",
-        "status_command": "uv run --with chromadb python .\\tools\\project-memory\\build_chroma_index.py status"
+        "enabled": false,
+        "command": "",
+        "status_command": ""
       },
       "code_intelligence": {
+        "enabled": false,
         "command": "",
-        "status_command": "python .\\tools\\project-memory\\code_intelligence.py status"
+        "status_command": ".\\tools\\project-memory\\run-memory.ps1 -Node code-intelligence status"
       },
       "evals": {
-        "command": "python .\\tools\\project-memory\\rag_check.py --skip-vector run",
-        "status_command": "python .\\tools\\project-memory\\rag_check.py --skip-vector health"
+        "enabled": true,
+        "command": ".\\tools\\project-memory\\run-memory.ps1 -Node evals run",
+        "status_command": ".\\tools\\project-memory\\run-memory.ps1 -Node evals health"
       }
     },
     "state": {
       "last_full_rebuild_migration": "",
       "last_full_rebuild_at": "",
-      "last_node_rebuilds": {}
+      "last_node_rebuilds": {
+        "sql": "2026-10-22T19:24:00.4628209Z",
+        "chunks": "2026-10-22T19:24:00.4628209Z",
+        "evals": "2026-10-22T19:24:00.4628209Z"
+      }
     }
   },
   "writeback": {

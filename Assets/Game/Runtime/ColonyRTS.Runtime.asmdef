@@ -1,0 +1,6 @@
+{
+  "name": "ColonyRTS.Runtime",
+  "rootNamespace": "ColonyRTS",
+  "references": ["ColonyRTS.Simulation"],
+  "autoReferenced": true
+}
